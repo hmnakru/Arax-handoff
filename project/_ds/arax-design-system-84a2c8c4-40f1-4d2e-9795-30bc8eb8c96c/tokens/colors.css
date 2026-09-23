@@ -1,0 +1,20 @@
+:root{
+/* Brand (logo) */
+--arax-red:#95110f;--arax-red-deep:#6e0c0b;--arax-blue:#1a3a94;--arax-blue-deep:#0e2a78;
+/* Crayon palette (sampled from illustrations) */
+--crayon-sky:#1d84cb;--crayon-sky-soft:#94bbe4;--crayon-sky-mist:#dbe8f5;
+--crayon-sun:#f8d733;--crayon-sun-soft:#fbe98a;
+--crayon-leaf:#3f8f3a;--crayon-leaf-soft:#b2d183;--crayon-leaf-mist:#dcebc0;
+--crayon-orange:#f39a2b;--crayon-amber:#cb8c30;--crayon-terracotta:#d0703f;
+--crayon-blush:#f8d8cb;--crayon-rose:#e98aa8;--crayon-plum:#8b5aa6;--crayon-red:#e0362c;
+/* Paper + ink */
+--paper:#f7f1e3;--paper-white:#fbf8f1;--paper-lined:#eef0f2;--paper-rule:#b9cde4;
+--ink:#1b1a18;--ink-2:#4a4640;--ink-3:#7d776c;--ink-inverse:#ffffff;
+/* Semantic aliases */
+--surface-page:var(--paper);--surface-card:var(--paper-white);--surface-brand:var(--arax-red);--surface-sky:var(--crayon-sky);
+--text-body:var(--ink);--text-muted:var(--ink-2);--text-subtle:var(--ink-3);--text-on-brand:var(--arax-blue);--text-on-sky:var(--ink-inverse);
+--text-label:var(--crayon-leaf);
+--border-ink:var(--ink);--border-soft:rgba(27,26,24,.14);
+--action-primary:var(--arax-red);--action-primary-hover:var(--arax-red-deep);--action-secondary:var(--arax-blue);
+--focus-ring:var(--crayon-sun);
+}

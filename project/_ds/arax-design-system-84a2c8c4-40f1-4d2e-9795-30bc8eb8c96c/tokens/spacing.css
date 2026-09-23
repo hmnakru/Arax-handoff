@@ -1,0 +1,12 @@
+:root{
+--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;
+--radius-xs:3px;--radius-sm:8px;--radius-md:14px;--radius-lg:24px;--radius-pill:999px;
+/* Torn-paper edge: irregular polygon used as clip-path on labels */
+--torn-edge:polygon(0 6%,4% 0,11% 5%,19% 1%,27% 6%,36% 0,44% 4%,53% 0,61% 5%,70% 1%,78% 6%,87% 0,94% 4%,100% 1%,99% 50%,100% 95%,93% 100%,85% 95%,76% 100%,67% 94%,58% 100%,49% 95%,40% 100%,31% 94%,22% 100%,13% 95%,5% 100%,0 94%,1% 50%);/* @kind other */
+--shadow-paper:0 1px 0 rgba(0,0,0,.06),0 6px 14px -6px rgba(27,26,24,.35);
+--shadow-sticker:0 0 0 3px var(--paper-white),0 4px 10px -2px rgba(0,0,0,.28);
+--shadow-lift:0 12px 28px -10px rgba(27,26,24,.4);
+--ease-bounce:cubic-bezier(.34,1.56,.64,1);/* @kind other */--ease-out:cubic-bezier(.2,.7,.2,1);/* @kind other */
+--dur-fast:120ms;/* @kind other */--dur-base:220ms;/* @kind other */
+--tilt-sm:-2deg;/* @kind other */--tilt-md:3deg;/* @kind other */
+}

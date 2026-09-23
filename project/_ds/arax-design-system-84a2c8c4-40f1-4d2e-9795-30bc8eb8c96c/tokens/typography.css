@@ -1,0 +1,14 @@
+:root{
+--font-label:'Rubik',system-ui,sans-serif;      /* bottle-label caps, stickers, UI */
+--font-hand:'Caveat','Neucha',cursive;          /* handwritten notes on torn paper */
+--font-crayon:'Neucha','Caveat',cursive;        /* crayon caps (event titles) */
+--font-body:'Rubik',system-ui,sans-serif;
+--fw-regular:400;/* @kind font */--fw-medium:500;/* @kind font */--fw-bold:700;/* @kind font */--fw-black:800;/* @kind font */
+--fs-display:88px;--fs-h1:56px;--fs-h2:40px;--fs-h3:28px;--fs-body:17px;--fs-small:14px;--fs-micro:12px;
+--lh-tight:1.02;/* @kind font */--lh-snug:1.18;/* @kind font */--lh-body:1.5;/* @kind font */
+--ls-label:.04em;/* @kind font */--ls-caps:.08em;/* @kind font */
+--text-display:var(--fw-black) var(--fs-display)/var(--lh-tight) var(--font-label);
+--text-heading:var(--fw-bold) var(--fs-h2)/var(--lh-snug) var(--font-label);
+--text-hand:var(--fw-bold) var(--fs-h3)/var(--lh-snug) var(--font-hand);
+--text-body-font:var(--fw-regular) var(--fs-body)/var(--lh-body) var(--font-body);
+}
