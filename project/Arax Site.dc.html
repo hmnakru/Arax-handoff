@@ -32,8 +32,9 @@
     .fbottle{position:absolute;left:calc(50% - 58px);top:-243px;width:118px;height:457px;filter:drop-shadow(0 6px 10px rgba(27,26,24,.3));pointer-events:none}
     .fbottle img{display:block;width:100%;height:100%;clip-path:inset(56.4% 14.5% 17.3% 13.2% round 3px);transform:rotate(-4deg);transform-origin:50% 69.5%;transition:clip-path .55s cubic-bezier(.2,.7,.2,1),transform .4s cubic-bezier(.34,1.56,.64,1)}
     .fcard:hover .fbottle img{clip-path:inset(0 0 0 0 round 3px);transform:translateY(-72px) rotate(0deg)}
-    .fan[data-state="wait"] .fpop{transform:scale(0)}
-    .fan[data-state="in"] .fpop{animation:fan-pop 1.1s both;animation-delay:calc(var(--i) * 80ms + 150ms)}
+    .fan[data-state="wait"] .fcard:not([data-in]) .fpop{transform:scale(0)}
+    .fcard[data-in] .fpop{animation:fan-pop 1.1s both;animation-delay:calc(var(--i) * 80ms + 150ms)}
+    @media (max-width:899px){.fcard[data-in] .fpop{animation-delay:.1s}}
     @keyframes fan-pop{0%{transform:scale(0)}40%{transform:scale(1.12)}58%{transform:scale(.94)}74%{transform:scale(1.03)}88%{transform:scale(.99)}100%{transform:scale(1)}}
     @media (min-width:900px){
       .fan{display:flex;justify-content:center;align-items:center;position:relative;height:460px;padding-top:90px;--step:min(120px,(100vw - 420px) / 8)}
@@ -244,16 +245,22 @@
 class Component extends DCLogic {
   state = { sent: false };
   componentDidMount() {
-    // карточки вкусов «выпрыгивают», когда секция появляется на экране
+    // каждая карточка вкуса «выпрыгивает», когда доходит до экрана (на телефоне они идут столбиком)
     const fan = document.getElementById('flavour-fan');
     if (!fan || !window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const cards = [...fan.querySelectorAll('.fcard')];
+    let left = cards.length;
+    if (!left) return;
     fan.dataset.state = 'wait';
-    this.fanObserver = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
-      fan.dataset.state = 'in';
-      this.fanObserver.disconnect();
-    }, { threshold: 0.3 });
-    this.fanObserver.observe(fan);
+    this.fanObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.dataset.in = '1';
+        this.fanObserver.unobserve(e.target);
+        if (--left === 0) { fan.dataset.state = 'done'; this.fanObserver.disconnect(); }
+      });
+    }, { threshold: 0.2 });
+    cards.forEach(c => this.fanObserver.observe(c));
   }
   componentWillUnmount() {
     this.fanObserver?.disconnect();
