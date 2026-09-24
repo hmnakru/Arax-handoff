@@ -6,7 +6,7 @@
           {
             "type": "command",
             "shell": "bash",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && git add -A && (git diff --cached --quiet || git commit -q -m \"Auto-commit: $(date '+%Y-%m-%d %H:%M')\") && git push -q origin main 2>&1 || true",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && git add -A && (git diff --cached --quiet || git commit -q -m \"Auto-commit: $(date '+%Y-%m-%d %H:%M')\"); git push -q origin main >/dev/null 2>&1 || echo '{\"systemMessage\": \"⚠️ Не удалось отправить изменения на GitHub (git push). Коммиты сохранены локально.\"}'",
             "timeout": 90,
             "statusMessage": "Syncing to GitHub..."
           }
