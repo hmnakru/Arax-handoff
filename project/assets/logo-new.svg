@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768" role="img" aria-labelledby="title desc">
+  <title id="title">Arax</title>
+  <desc id="desc">Blue Arax wordmark inside a blue circle</desc>
+  <rect width="768" height="768" fill="#fff"/>
+  <circle cx="384" cy="384" r="366" fill="none" stroke="#1553a0" stroke-width="24"/>
+  <text x="384" y="474" text-anchor="middle" fill="#1553a0" font-family="Marker Felt, Chalkboard SE, cursive" font-size="198" font-weight="700" textLength="648" lengthAdjust="spacingAndGlyphs">arax</text>
+</svg>

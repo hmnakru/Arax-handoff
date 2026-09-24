@@ -37,13 +37,13 @@
   <header style="position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:0">
     <div style="max-width:1240px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
       <a href="#top" style="display:flex;align-items:center;gap:12px">
-        <x-import component-from-global-scope="AraxDesignSystem_84a2c8.Logo" size="{{ 54 }}" hint-size="54px,54px"></x-import>
+        <x-import component-from-global-scope="AraxDesignSystem_84a2c8.Logo" src="assets/logo-arax.png" size="{{ 54 }}" hint-size="54px,54px"></x-import>
       </a>
       <nav style="display:flex;gap:28px;flex-wrap:wrap;margin-left:auto;font-size:26px;font-weight:700">
-        <a href="#flavours" style="color:var(--ink)" style-hover="color:var(--arax-red)">вкусы</a>
-        <a href="#where" style="color:var(--ink)" style-hover="color:var(--arax-red)">где купить</a>
-        <a href="#collabs" style="color:var(--ink)" style-hover="color:var(--arax-red)">коллаборации</a>
-        <a href="#partner" style="color:var(--ink)" style-hover="color:var(--arax-red)">сотрудничество</a>
+        <a href="#flavours" style="color:var(--ink)" style-hover="color:var(--arax-red)">Вкусы</a>
+        <a href="#where" style="color:var(--ink)" style-hover="color:var(--arax-red)">Где купить</a>
+        <a href="#collabs" style="color:var(--ink)" style-hover="color:var(--arax-red)">Коллаборации</a>
+        <a href="#partner" style="color:var(--ink)" style-hover="color:var(--arax-red)">Сотрудничество</a>
       </nav>
     </div>
     <svg viewBox="0 0 1200 10" preserveAspectRatio="none" style="display:block;width:100%;height:8px;filter:url(#rough)"><path d="M0 5 C200 2 380 8 600 4 S1000 7 1200 3" stroke="#1b1a18" stroke-width="2.2" fill="none" stroke-linecap="round"></path></svg>
@@ -53,24 +53,24 @@
   <section id="top" data-screen-label="Hero" style="position:relative;background:{{ heroBg }};background-image:repeating-linear-gradient(-28deg,rgba(255,255,255,.16) 0 2px,transparent 2px 6px),repeating-linear-gradient(62deg,rgba(0,0,0,.035) 0 1px,transparent 1px 5px)">
     <div style="max-width:1240px;margin:0 auto;padding:72px 24px 96px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:56px;align-items:center">
       <div style="display:flex;flex-direction:column;gap:28px;align-items:flex-start">
-        <x-import component-from-global-scope="AraxDesignSystem_84a2c8.TornLabel" variant="hand" tilt="{{ -3 }}" size="{{ 30 }}" pin="{{ true }}" hint-size="260px,56px">лимонады из Еревана</x-import>
+        <x-import component-from-global-scope="AraxDesignSystem_84a2c8.TornLabel" variant="hand" tilt="{{ -3 }}" size="{{ 30 }}" pin="{{ true }}" hint-size="260px,56px">Лимонады из Еревана</x-import>
         <h1 style="margin:0;font-size:clamp(64px,9vw,124px);line-height:.86;font-weight:700;color:var(--ink);text-wrap:balance">Фрукты, травы <span style="position:relative;display:inline-block;color:var(--arax-red)">и&nbsp;пузырьки<svg viewBox="0 0 300 30" preserveAspectRatio="none" style="position:absolute;left:-2%;bottom:-10px;width:104%;height:26px;filter:url(#rough)"><path d="M4 18 C60 8 120 24 180 12 S270 10 296 16 M20 24 C90 16 180 26 280 20" stroke="#95110f" stroke-width="4" fill="none" stroke-linecap="round"></path></svg></span></h1>
         <p style="margin:0;font-size:30px;line-height:1.2;max-width:30ch;color:var(--ink-2);text-wrap:pretty">Лимон с мелиссой, грейпфрут с шалфеем, облепиха с чили — в стеклянных бутылках с кремовой этикеткой.</p>
         <div style="display:flex;gap:16px;flex-wrap:wrap;padding-top:8px">
-          <a href="#flavours"><x-import component-from-global-scope="AraxDesignSystem_84a2c8.Button" variant="primary" size="lg" style="{{ btnStyle }}" hint-size="200px,52px">попробовать вкусы</x-import></a>
-          <a href="#where"><x-import component-from-global-scope="AraxDesignSystem_84a2c8.Button" variant="paper" size="lg" style="{{ btnStyle }}" hint-size="160px,52px">где купить</x-import></a>
+          <a href="#flavours"><x-import component-from-global-scope="AraxDesignSystem_84a2c8.Button" variant="primary" size="lg" style="{{ btnStyle }}" hint-size="200px,52px">Попробовать вкусы</x-import></a>
+          <a href="#where"><x-import component-from-global-scope="AraxDesignSystem_84a2c8.Button" variant="paper" size="lg" style="{{ btnStyle }}" hint-size="160px,52px">Где купить</x-import></a>
         </div>
       </div>
 
       <div style="position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1/1.12">
         <div style="position:absolute;left:2%;top:0;width:58%;background:var(--paper-white);padding:14px 14px 56px;transform:rotate(-5deg);box-shadow:var(--shadow-lift);transition:transform var(--dur-base) var(--ease-bounce)" style-hover="transform:rotate(-2deg) scale(1.02)">
           <img src="assets/illustrations/bottles-yellow.jpg" alt="Бутылки ARAX" style="display:block;width:100%;aspect-ratio:3/4;object-fit:cover">
-          <div style="position:absolute;left:0;right:0;bottom:12px;text-align:center;font-size:26px;font-weight:700">облепиха · чили</div>
+          <div style="position:absolute;left:0;right:0;bottom:12px;text-align:center;font-size:26px;font-weight:700">Облепиха · чили</div>
           <div style="position:absolute;inset:-5px;border:2.5px solid var(--ink);border-radius:8px 22px 6px 18px/20px 6px 24px 8px;filter:url(#rough);pointer-events:none"></div>
         </div>
         <div style="position:absolute;right:0;top:120px;width:54%;background:var(--paper-white);padding:14px 14px 56px;transform:rotate(4deg);box-shadow:var(--shadow-lift);transition:transform var(--dur-base) var(--ease-bounce)" style-hover="transform:rotate(1deg) scale(1.02)">
           <img src="assets/illustrations/kruzhok-girl-blue.jpg" alt="Лимон и грейпфрут ARAX" style="display:block;width:100%;aspect-ratio:3/4;object-fit:cover">
-          <div style="position:absolute;left:0;right:0;bottom:12px;text-align:center;font-size:26px;font-weight:700">лимон · мелисса</div>
+          <div style="position:absolute;left:0;right:0;bottom:12px;text-align:center;font-size:26px;font-weight:700">Лимон · мелисса</div>
           <div style="position:absolute;inset:-5px;border:2.5px solid var(--ink);border-radius:20px 6px 18px 8px/8px 22px 6px 20px;filter:url(#rough2);pointer-events:none"></div>
         </div>
         <svg viewBox="0 0 120 120" style="position:absolute;left:52%;top:-18px;width:86px;transform:rotate(12deg);filter:url(#rough);z-index:2"><path d="M60 8 L73 45 L112 46 L81 70 L92 108 L60 86 L28 108 L39 70 L8 46 L47 45 Z" fill="#e0362c" stroke="#fbf8f1" stroke-width="6" stroke-linejoin="round"></path></svg>
@@ -177,25 +177,25 @@
           <div style="display:flex;flex-direction:column;gap:12px;padding:40px 0;align-items:flex-start">
             <div style="font-size:48px;font-weight:700;line-height:1">Спасибо!</div>
             <div style="font-size:28px;color:var(--ink-2)">Ответим в течение пары дней. До встречи, араксоголики.</div>
-            <button type="button" onClick="{{ reset }}" style="margin-top:8px;background:none;border:0;padding:0;font-size:24px;color:var(--arax-blue);cursor:pointer;text-decoration:underline">отправить ещё</button>
+            <button type="button" onClick="{{ reset }}" style="margin-top:8px;background:none;border:0;padding:0;font-size:24px;color:var(--arax-blue);cursor:pointer;text-decoration:underline">Отправить ещё</button>
           </div>
         </sc-if>
         <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
           <div style="display:flex;flex-direction:column;gap:22px">
-            <label style="display:flex;flex-direction:column;gap:2px;font-size:22px;color:var(--ink-3)">как вас зовут
+            <label style="display:flex;flex-direction:column;gap:2px;font-size:22px;color:var(--ink-3)">Как вас зовут
               <input required="" name="name" placeholder="Анна" style="border:0;border-bottom:2px solid var(--ink);background:transparent;font-size:30px;padding:4px 2px;outline:none;color:var(--ink)">
             </label>
-            <label style="display:flex;flex-direction:column;gap:2px;font-size:22px;color:var(--ink-3)">место или проект
-              <input name="place" placeholder="кафе на Сарьяна" style="border:0;border-bottom:2px solid var(--ink);background:transparent;font-size:30px;padding:4px 2px;outline:none;color:var(--ink)">
+            <label style="display:flex;flex-direction:column;gap:2px;font-size:22px;color:var(--ink-3)">Место или проект
+              <input name="place" placeholder="Кафе на Сарьяна" style="border:0;border-bottom:2px solid var(--ink);background:transparent;font-size:30px;padding:4px 2px;outline:none;color:var(--ink)">
             </label>
-            <label style="display:flex;flex-direction:column;gap:2px;font-size:22px;color:var(--ink-3)">телефон, telegram или instagram
+            <label style="display:flex;flex-direction:column;gap:2px;font-size:22px;color:var(--ink-3)">Телефон, telegram или instagram
               <input required="" name="contact" placeholder="@kruzhok" style="border:0;border-bottom:2px solid var(--ink);background:transparent;font-size:30px;padding:4px 2px;outline:none;color:var(--ink)">
             </label>
-            <label style="display:flex;flex-direction:column;gap:2px;font-size:22px;color:var(--ink-3)">что придумали
-              <textarea name="msg" rows="3" placeholder="хотим свою этикетку" style="border:0;border-bottom:2px solid var(--ink);background:transparent;font-size:30px;padding:4px 2px;outline:none;resize:vertical;color:var(--ink);line-height:44px"></textarea>
+            <label style="display:flex;flex-direction:column;gap:2px;font-size:22px;color:var(--ink-3)">Что придумали
+              <textarea name="msg" rows="3" placeholder="Хотим свою этикетку" style="border:0;border-bottom:2px solid var(--ink);background:transparent;font-size:30px;padding:4px 2px;outline:none;resize:vertical;color:var(--ink);line-height:44px"></textarea>
             </label>
             <div style="padding-top:8px">
-              <x-import component-from-global-scope="AraxDesignSystem_84a2c8.Button" variant="secondary" size="lg" type="submit" style="{{ btnStyle }}" hint-size="180px,52px">отправить</x-import>
+              <x-import component-from-global-scope="AraxDesignSystem_84a2c8.Button" variant="secondary" size="lg" type="submit" style="{{ btnStyle }}" hint-size="180px,52px">Отправить</x-import>
             </div>
           </div>
         </sc-if>
@@ -206,8 +206,8 @@
   <footer style="background:var(--paper)">
     <svg viewBox="0 0 1200 10" preserveAspectRatio="none" style="display:block;width:100%;height:8px;filter:url(#rough)"><path d="M0 5 C220 8 420 2 640 6 S1000 3 1200 6" stroke="#1b1a18" stroke-width="2.2" fill="none" stroke-linecap="round"></path></svg>
     <div style="max-width:1240px;margin:0 auto;padding:40px 24px 56px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
-      <x-import component-from-global-scope="AraxDesignSystem_84a2c8.Logo" size="{{ 72 }}" hint-size="72px,72px"></x-import>
-      <div style="font-size:34px;font-weight:700">до встречи, араксоголики</div>
+      <x-import component-from-global-scope="AraxDesignSystem_84a2c8.Logo" src="assets/logo-arax.png" size="{{ 72 }}" hint-size="72px,72px"></x-import>
+      <div style="font-size:34px;font-weight:700">До встречи, араксоголики</div>
       <div style="margin-left:auto;font-size:24px;color:var(--ink-3)">Ереван, 2026</div>
     </div>
   </footer>
@@ -246,9 +246,9 @@ class Component extends DCLogic {
       collabs: [
         { title: 'ARAX × GARGOYLE', text: 'Именная этикетка с горгульей для бара настольных игр.', img: 'assets/illustrations/gargoyle-green.jpg', tilt: -2.5, labelTilt: -2 },
         { title: 'ARAX BIRTHDAY', text: '01.08, 15:00 — день рождения на той самой теннисной площадке.', img: 'assets/collage/birthday-poster.jpg', tilt: 2, labelTilt: 2.5 },
-        { title: 'до встречи', text: 'Прощальная вечеринка с друзьями бренда.', img: 'assets/collage/farewell-post.jpg', tilt: -1.5, labelTilt: -1.5 },
+        { title: 'До встречи', text: 'Прощальная вечеринка с друзьями бренда.', img: 'assets/collage/farewell-post.jpg', tilt: -1.5, labelTilt: -1.5 },
       ],
-      offers: ['поставки в кафе, бары и магазины', 'своя этикетка для вашего места', 'лимонад на ваше событие'],
+      offers: ['Поставки в кафе, бары и магазины', 'Своя этикетка для вашего места', 'Лимонад на ваше событие'],
       sent: this.state.sent, notSent: !this.state.sent,
       submit: e => { e.preventDefault(); this.setState({ sent: true }); },
       reset: () => this.setState({ sent: false }),
