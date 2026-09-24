@@ -24,25 +24,22 @@
     a:hover{color:var(--arax-red)}
     input,textarea,button{font-family:inherit}
     ::placeholder{color:var(--ink-3)}
-    /* Flavour fan — BounceCards (reactbits.dev) без GSAP: пружинное появление + соседи разъезжаются при наведении */
-    .fan{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:40px 32px}
-    .fcard{position:relative;transform:rotate(var(--tilt));transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
-    .fcard:hover{z-index:5;transform:rotate(0deg) translateY(-6px)}
+    /* Карусель вкусов — Arc Flow Carousel (vault.hyperiux.com) без GSAP: карточки едут по дуге колеса.
+       Все размеры карточки считаются от --cw (ширина карточки), её выставляет скрипт */
+    .arc-stage{position:relative;width:100%;height:560px;cursor:grab;outline:none;touch-action:pan-y;user-select:none;-webkit-user-select:none;clip-path:inset(calc(var(--cw,270px) * -0.5) 0 0 0)}
+    .arc-stage:focus-visible{box-shadow:inset 0 0 0 3px var(--focus-ring)}
+    .acard{position:absolute;top:0;left:0;visibility:hidden;will-change:transform}
+    .acard:hover{z-index:100000 !important}
+    .acard-inner{position:relative;box-sizing:border-box;height:100%;background:var(--paper-white);padding:calc(var(--cw) * .1) calc(var(--cw) * .09);display:flex;flex-direction:column;gap:calc(var(--cw) * .05);box-shadow:0 18px 40px -12px rgba(27,26,24,.4),0 2px 6px rgba(27,26,24,.12);opacity:0}
+    .acard-art{position:relative;flex:none;height:calc(var(--cw) * .55);display:flex;align-items:center;justify-content:center}
+    .acard-blob{position:absolute;width:calc(var(--cw) * .51);height:calc(var(--cw) * .475);border-radius:52% 48% 55% 45%/48% 55% 45% 52%}
+    .acard-num{position:relative;font-size:calc(var(--cw) * .2);font-weight:700;color:var(--ink);transform:rotate(-6deg)}
+    .acard-ru{font-size:calc(var(--cw) * .13);line-height:1;font-weight:700}
+    .acard-en{font-size:calc(var(--cw) * .072);letter-spacing:.08em;color:var(--crayon-leaf);font-weight:700}
     /* Бутылка: до наведения обрезана по этикетке, при наведении раскрывается целиком (inset = границы этикетки на фото) */
-    .fbottle{position:absolute;left:calc(50% - 58px);top:-243px;width:118px;height:457px;filter:drop-shadow(0 6px 10px rgba(27,26,24,.3));pointer-events:none}
+    .fbottle{position:absolute;left:calc(50% - var(--cw) * .2125);top:calc(var(--cw) * -.8886);width:calc(var(--cw) * .432);height:calc(var(--cw) * 1.674);filter:drop-shadow(0 6px 10px rgba(27,26,24,.3));pointer-events:none}
     .fbottle img{display:block;width:100%;height:100%;clip-path:inset(56.4% 14.5% 17.3% 13.2% round 3px);transform:rotate(-4deg);transform-origin:50% 69.5%;transition:clip-path .55s cubic-bezier(.2,.7,.2,1),transform .4s cubic-bezier(.34,1.56,.64,1)}
-    .fcard:hover .fbottle img{clip-path:inset(0 0 0 0 round 3px);transform:translateY(-72px) rotate(0deg)}
-    .fan[data-state="wait"] .fcard:not([data-in]) .fpop{transform:scale(0)}
-    .fcard[data-in] .fpop{animation:fan-pop 1.1s both;animation-delay:calc(var(--i) * 80ms + 150ms)}
-    @media (max-width:899px){.fcard[data-in] .fpop{animation-delay:.1s}}
-    @keyframes fan-pop{0%{transform:scale(0)}40%{transform:scale(1.12)}58%{transform:scale(.94)}74%{transform:scale(1.03)}88%{transform:scale(.99)}100%{transform:scale(1)}}
-    @media (min-width:900px){
-      .fan{display:flex;justify-content:center;align-items:center;position:relative;height:460px;padding-top:90px;--step:min(120px,(100vw - 420px) / 8)}
-      .fcard{position:absolute;width:230px;z-index:var(--i);transform:translate(calc(var(--x) * var(--step) + var(--push,0px)),var(--y)) rotate(var(--r))}
-      .fcard:hover{z-index:20;transform:translate(calc(var(--x) * var(--step)),-18px) rotate(0deg) scale(1.04)}
-      .fcard:hover ~ .fcard{--push:60px}
-      .fcard:has(~ .fcard:hover){--push:-60px}
-    }
+    .acard:hover .fbottle img{clip-path:inset(0 0 0 0 round 3px);transform:translateY(calc(var(--cw) * -.25)) rotate(0deg)}
   </style>
 </helmet>
 
@@ -100,36 +97,36 @@
 
   <!-- FLAVOURS -->
   <section id="flavours" data-screen-label="Вкусы" style="scroll-margin-top:80px">
-    <div style="max-width:1240px;margin:0 auto;padding:96px 24px;display:flex;flex-direction:column;gap:48px">
+    <div style="max-width:1240px;margin:0 auto;padding:96px 24px 0;display:flex;flex-direction:column;gap:48px">
       <div style="display:flex;flex-direction:column;gap:6px">
         <h2 style="margin:0;font-size:clamp(56px,7vw,88px);line-height:.9;font-weight:700">Вкусы лимонадов</h2>
         <svg viewBox="0 0 420 20" style="width:min(420px,80%);height:18px;filter:url(#rough)"><path d="M4 12 C80 4 160 18 240 9 S380 6 416 12" stroke="#3f8f3a" stroke-width="4" fill="none" stroke-linecap="round"></path></svg>
         <p style="margin:8px 0 0;font-size:28px;color:var(--ink-2)">Фрукты, травы и немного смелости. Выбирайте свой.</p>
       </div>
-      <div id="flavour-fan" class="fan">
-        <sc-for list="{{ flavours }}" as="f" hint-placeholder-count="8">
-          <div class="fcard" style="--i:{{ f.i }};--x:{{ f.x }};--y:{{ f.y }};--r:{{ f.r }};--tilt:{{ f.tilt }}deg">
-          <div class="fpop" style="position:relative;background:var(--paper-white);padding:28px 24px 26px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-paper)">
+    </div>
+    <div id="flavour-arc" class="arc-stage" tabindex="0" role="region" aria-label="Карусель вкусов: тяните в сторону, чтобы листать">
+      <sc-for list="{{ arcSlots }}" as="f" hint-placeholder-count="24">
+        <div class="acard">
+          <div class="acard-inner">
             <sc-if value="{{ f.hasBottle }}" hint-placeholder-val="{{ false }}">
-              <div style="position:relative;height:150px">
-                <div class="fbottle"><img src="{{ f.bottle }}" alt="ARAX {{ f.en }}"></div>
+              <div class="acard-art" style="display:block">
+                <div class="fbottle"><img src="{{ f.bottle }}" alt="ARAX {{ f.en }}" draggable="false"></div>
               </div>
             </sc-if>
             <sc-if value="{{ f.noBottle }}" hint-placeholder-val="{{ true }}">
-            <div style="position:relative;height:150px;display:flex;align-items:center;justify-content:center">
-              <div style="position:absolute;width:140px;height:130px;border-radius:52% 48% 55% 45%/48% 55% 45% 52%;background:{{ f.color }};filter:url(#crayon);opacity:.9"></div>
-              <div style="position:absolute;width:140px;height:130px;border-radius:52% 48% 55% 45%/48% 55% 45% 52%;background:repeating-linear-gradient(-40deg,{{ f.color }} 0 3px,transparent 3px 7px);transform:translate(10px,8px) rotate(8deg);filter:url(#rough)"></div>
-              <div style="position:relative;font-size:56px;font-weight:700;color:var(--ink);transform:rotate(-6deg)">{{ f.num }}</div>
-            </div>
+              <div class="acard-art">
+                <div class="acard-blob" style="background:{{ f.color }};filter:url(#crayon);opacity:.9"></div>
+                <div class="acard-blob" style="background:repeating-linear-gradient(-40deg,{{ f.color }} 0 3px,transparent 3px 7px);transform:translate(8%,6%) rotate(8deg);filter:url(#rough)"></div>
+                <div class="acard-num">{{ f.num }}</div>
+              </div>
             </sc-if>
-            <div style="font-size:36px;line-height:1;font-weight:700">{{ f.ru }}</div>
-            <div style="font-size:20px;letter-spacing:.08em;color:var(--crayon-leaf);font-weight:700">{{ f.en }}</div>
+            <div class="acard-ru">{{ f.ru }}</div>
+            <div class="acard-en">{{ f.en }}</div>
             <div style="position:absolute;inset:0;border:2.5px solid var(--ink);border-radius:14px 4px 18px 6px/6px 18px 4px 14px;filter:url(#rough);pointer-events:none"></div>
             <div style="position:absolute;inset:4px -3px -3px 4px;border:1.5px solid var(--ink-3);border-radius:4px 16px 6px 18px/18px 6px 16px 4px;filter:url(#rough2);pointer-events:none;opacity:.6"></div>
           </div>
-          </div>
-        </sc-for>
-      </div>
+        </div>
+      </sc-for>
     </div>
   </section>
 
@@ -245,25 +242,180 @@
 class Component extends DCLogic {
   state = { sent: false };
   componentDidMount() {
-    // каждая карточка вкуса «выпрыгивает», когда доходит до экрана (на телефоне они идут столбиком)
-    const fan = document.getElementById('flavour-fan');
-    if (!fan || !window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const cards = [...fan.querySelectorAll('.fcard')];
-    let left = cards.length;
-    if (!left) return;
-    fan.dataset.state = 'wait';
-    this.fanObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.dataset.in = '1';
-        this.fanObserver.unobserve(e.target);
-        if (--left === 0) { fan.dataset.state = 'done'; this.fanObserver.disconnect(); }
+    this.destroyArc?.();
+    this.destroyArc = this.initArcCarousel(document.getElementById('flavour-arc'));
+  }
+  // Arc Flow Carousel (vault.hyperiux.com), перенесён без React/GSAP: карточки едут по дуге
+  // большого колеса, тянутся мышью или пальцем, после броска докатываются по инерции
+  initArcCarousel(stage) {
+    const cards = stage ? [...stage.querySelectorAll('.acard')] : [];
+    if (!cards.length) return null;
+    const inners = cards.map(c => c.querySelector('.acard-inner'));
+    const clamp = (min, max, v) => Math.min(max, Math.max(min, v));
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // настройки оригинала
+    const CARD_RATIO = 0.21, MIN_CARD = 150, MAX_CARD = 320, CARD_ASPECT = 0.74, OVERLAP = -0.04;
+    const RADIUS_RATIO = 0.85, SMOOTHING = 5.5, DRAG_SMOOTHING = 14, DRAG_SENSITIVITY = 1.2;
+    const VELOCITY_WINDOW = 90, MAX_FLICK = 9, STAGGER_LAG = 0.85, MIN_FOLLOW = 0.6;
+    // место над карточками: бутылка при наведении поднимается над карточкой (ещё .5cw разрешено вылезать за край)
+    const TOP_ROOM = 0.7, BOTTOM_ROOM = 0.35;
+
+    const L = { radius: 900, cw: 220, ch: 330, step: 0.14, cx: 0, cy: 0, maxAngle: 1 };
+    const offsets = cards.map(() => 0);
+    let current = 0, target = 0, dragging = false, pointerId = null, lastX = 0, samples = [];
+    let reveal = reduceMotion ? 1 : 0, revealStart = 0, visible = false, raf = 0, lastT = performance.now();
+
+    const measure = () => {
+      const w = stage.offsetWidth;
+      const cw = clamp(MIN_CARD, MAX_CARD, w * CARD_RATIO);
+      const ch = cw / CARD_ASPECT;
+      const radius = Math.max(w * RADIUS_RATIO, cw * 4.2);
+      const top = cw * TOP_ROOM;
+      stage.style.setProperty('--cw', cw + 'px');
+      stage.style.height = top + ch + cw * BOTTOM_ROOM + 'px';
+      const reach = Math.min(1, (w / 2 + cw * 1.2) / radius);
+      Object.assign(L, {
+        radius, cw, ch,
+        step: (cw * (1 - clamp(-0.5, 0.85, OVERLAP))) / radius,
+        cx: w / 2,
+        cy: top + ch / 2 + radius,
+        maxAngle: Math.asin(reach) + 0.12,
       });
-    }, { threshold: 0.2 });
-    cards.forEach(c => this.fanObserver.observe(c));
+      cards.forEach(c => { c.style.width = cw + 'px'; c.style.height = ch + 'px'; });
+    };
+
+    const draw = dt => {
+      const n = cards.length, span = n * L.step, half = span / 2;
+      const rate = dragging || reduceMotion ? DRAG_SMOOTHING : SMOOTHING;
+      for (let i = 0; i < n; i++) {
+        if (reduceMotion) offsets[i] = current;
+        else {
+          // ближняя к центру карточка идёт за пальцем сразу, дальние догоняют с задержкой — движение расходится волной
+          let rank = (i * L.step - offsets[i]) % span;
+          if (rank < -half) rank += span; else if (rank >= half) rank -= span;
+          const far = clamp(0, 1, Math.abs(rank) / L.maxAngle);
+          const follow = Math.max(rate * (1 - far * STAGGER_LAG), rate * MIN_FOLLOW);
+          offsets[i] += (current - offsets[i]) * (1 - Math.exp(-follow * dt));
+        }
+        let a = (i * L.step - offsets[i]) % span;
+        if (a < -half) a += span; else if (a >= half) a -= span;
+        const card = cards[i];
+        if (Math.abs(a) > L.maxAngle) { card.style.visibility = 'hidden'; continue; }
+        card.style.visibility = 'visible';
+        const x = L.cx + L.radius * Math.sin(a) - L.cw / 2;
+        const y = L.cy - L.radius * Math.cos(a) - L.ch / 2;
+        card.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${a}rad)`;
+        card.style.zIndex = Math.round((a + half) * 1000);
+        const inner = inners[i];
+        if (reveal < 1) {
+          // появление: карточки въезжают снизу, от центра к краям
+          const delay = Math.min(1, Math.abs(a) / L.maxAngle) * 0.45;
+          const p = clamp(0, 1, (reveal - delay) / (1 - delay || 1));
+          const eased = 1 - Math.pow(1 - p, 3);
+          inner.style.opacity = eased;
+          inner.style.transform = `translate3d(0, ${(1 - eased) * L.ch * 0.35}px, 0)`;
+        } else if (inner.style.opacity !== '1') {
+          inner.style.opacity = '1';
+          inner.style.transform = 'none';
+        }
+      }
+    };
+
+    const loop = t => {
+      const dt = Math.min(t - lastT, 50) / 1000;
+      lastT = t;
+      if (visible) {
+        const rate = dragging || reduceMotion ? DRAG_SMOOTHING : SMOOTHING;
+        const delta = target - current;
+        current += delta * (1 - Math.exp(-rate * dt));
+        if (Math.abs(delta) < 0.00002) current = target;
+        if (reveal < 1) {
+          if (!revealStart) revealStart = performance.now();
+          reveal = Math.min(1, (performance.now() - revealStart) / 1100);
+        }
+        draw(dt);
+      }
+      raf = requestAnimationFrame(loop);
+    };
+
+    const pushSample = () => {
+      const now = performance.now();
+      samples.push({ t: now, v: target });
+      while (samples.length > 2 && now - samples[0].t > VELOCITY_WINDOW) samples.shift();
+    };
+    const onDown = e => {
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      dragging = true;
+      pointerId = e.pointerId;
+      lastX = e.clientX;
+      samples = [{ t: performance.now(), v: target }];
+      target = current; // палец лёг — остаток броска гасится
+      stage.setPointerCapture(e.pointerId);
+      stage.style.cursor = 'grabbing';
+    };
+    const onMove = e => {
+      if (!dragging || e.pointerId !== pointerId) return;
+      target -= ((e.clientX - lastX) * DRAG_SENSITIVITY) / L.radius;
+      lastX = e.clientX;
+      pushSample();
+    };
+    const onUp = e => {
+      if (!dragging || e.pointerId !== pointerId) return;
+      dragging = false;
+      pointerId = null;
+      stage.style.cursor = '';
+      if (stage.hasPointerCapture(e.pointerId)) stage.releasePointerCapture(e.pointerId);
+      pushSample();
+      if (!reduceMotion) {
+        const first = samples[0], last = samples[samples.length - 1];
+        const dt = (last.t - first.t) / 1000;
+        if (dt > 0.008) target += clamp(-MAX_FLICK, MAX_FLICK, (last.v - first.v) / dt / SMOOTHING);
+      }
+      samples = [];
+    };
+    const onWheel = e => {
+      // только горизонтальная прокрутка (тачпад вбок), вертикальная листает страницу
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      target += (e.deltaX * DRAG_SENSITIVITY) / L.radius;
+    };
+    const onKey = e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); target += L.step; }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); target -= L.step; }
+    };
+
+    stage.addEventListener('pointerdown', onDown);
+    stage.addEventListener('pointermove', onMove);
+    stage.addEventListener('pointerup', onUp);
+    stage.addEventListener('pointercancel', onUp);
+    stage.addEventListener('wheel', onWheel, { passive: false });
+    stage.addEventListener('keydown', onKey);
+    const resizer = new ResizeObserver(measure);
+    resizer.observe(stage);
+    // анимация идёт, только пока карусель на экране; появление стартует при первом показе
+    const seen = new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.15 });
+    seen.observe(stage);
+
+    measure();
+    draw(1);
+    raf = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      resizer.disconnect();
+      seen.disconnect();
+      stage.removeEventListener('pointerdown', onDown);
+      stage.removeEventListener('pointermove', onMove);
+      stage.removeEventListener('pointerup', onUp);
+      stage.removeEventListener('pointercancel', onUp);
+      stage.removeEventListener('wheel', onWheel);
+      stage.removeEventListener('keydown', onKey);
+    };
   }
   componentWillUnmount() {
-    this.fanObserver?.disconnect();
+    this.destroyArc?.();
+    this.destroyArc = null;
   }
   renderVals() {
     const p = this.props;
@@ -279,23 +431,21 @@ class Component extends DCLogic {
       { name: 'Hummus Kimchi', addr: '16 Martiros Saryan St', img: 'assets/illustrations/hummus-kimchi-storefront.jpg', pos: 'center', tilt: 1.6 },
       { name: 'Pavstos Buzand', addr: '19 Pavstos Buzand St', img: 'assets/illustrations/bottles-yellow.jpg', pos: 'center', tilt: -1.2 },
     ].map(v => ({ ...v, map: map(v.addr) }));
+    const flavours = [
+      { num: '01', ru: 'Лимон · мелисса', en: 'LEMON · BALM MINT', color: 'var(--crayon-sun)', tilt: -1.5 },
+      { num: '02', ru: 'Грейпфрут · шалфей', en: 'GRAPEFRUIT · SAGE', color: 'var(--crayon-rose)', tilt: 1 },
+      { num: '03', ru: 'Облепиха · чили', en: 'SEA BUCKTHORN · CHILI', color: 'var(--crayon-orange)', tilt: -0.6 },
+      { num: '04', ru: 'Айва · облепиха', en: 'QUINCE · SEA BUCKTHORN', color: 'var(--crayon-amber)', tilt: 1.8 },
+      { num: '05', ru: 'Лаванда · толокнянка', en: 'LAVENDER · BEARBERRY', color: 'var(--crayon-plum)', tilt: -1.2 },
+      { num: '06', ru: 'Эхинацея · чёрная смородина', en: 'ECHINACEA · BLACKCURRANT', color: 'var(--crayon-terracotta)', tilt: 0.8 },
+      { num: '07', ru: 'Сосна · лимон', en: 'PINE · LEMON', color: 'var(--crayon-leaf)', tilt: -1.8 },
+      { num: '08', ru: 'Слива · кола', en: 'PLUM · COLA', color: 'var(--crayon-plum)', tilt: 1.2, bottle: 'assets/bottles/plum-cola-bottle.png' },
+    ].map(f => ({ ...f, hasBottle: !!f.bottle, noBottle: !f.bottle }));
     return {
       font, wobble: wob[p.wobble ?? 'light'], heroBg: grounds[p.heroGround ?? 'sun'],
       btnStyle: { fontFamily: font, fontSize: 26, padding: '12px 30px' },
-      flavours: [
-        { num: '01', ru: 'Лимон · мелисса', en: 'LEMON · BALM MINT', color: 'var(--crayon-sun)', tilt: -1.5 },
-        { num: '02', ru: 'Грейпфрут · шалфей', en: 'GRAPEFRUIT · SAGE', color: 'var(--crayon-rose)', tilt: 1 },
-        { num: '03', ru: 'Облепиха · чили', en: 'SEA BUCKTHORN · CHILI', color: 'var(--crayon-orange)', tilt: -0.6 },
-        { num: '04', ru: 'Айва · облепиха', en: 'QUINCE · SEA BUCKTHORN', color: 'var(--crayon-amber)', tilt: 1.8 },
-        { num: '05', ru: 'Лаванда · толокнянка', en: 'LAVENDER · BEARBERRY', color: 'var(--crayon-plum)', tilt: -1.2 },
-        { num: '06', ru: 'Эхинацея · чёрная смородина', en: 'ECHINACEA · BLACKCURRANT', color: 'var(--crayon-terracotta)', tilt: 0.8 },
-        { num: '07', ru: 'Сосна · лимон', en: 'PINE · LEMON', color: 'var(--crayon-leaf)', tilt: -1.8 },
-        { num: '08', ru: 'Слива · кола', en: 'PLUM · COLA', color: 'var(--crayon-plum)', tilt: 1.2, bottle: 'assets/bottles/plum-cola-bottle.png' },
-      ].map((f, i, all) => {
-        // веер: карточки расходятся от центра дугой, как карты в руке
-        const d = i - (all.length - 1) / 2;
-        return { ...f, i, x: d, y: d * d * 6 + 'px', r: d * 4.5 + 'deg', hasBottle: !!f.bottle, noBottle: !f.bottle };
-      }),
+      // лента бесконечная: вкусы повторяются по кругу, 24 слота (кратно числу вкусов — шов не виден)
+      arcSlots: Array.from({ length: 24 }, (_, k) => flavours[k % flavours.length]),
       venues,
       collabs: [
         { title: 'ARAX × GARGOYLE', text: 'Именная этикетка с горгульей для бара настольных игр.', img: 'assets/illustrations/gargoyle-green.jpg', tilt: -2.5, labelTilt: -2 },
