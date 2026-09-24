@@ -27,16 +27,20 @@
     /* Flavour fan — BounceCards (reactbits.dev) без GSAP: пружинное появление + соседи разъезжаются при наведении */
     .fan{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:40px 32px}
     .fcard{position:relative;transform:rotate(var(--tilt));transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
-    .fcard:hover{transform:rotate(0deg) translateY(-6px)}
+    .fcard:hover{z-index:5;transform:rotate(0deg) translateY(-6px)}
+    /* Бутылка: до наведения обрезана по этикетке, при наведении раскрывается целиком (inset = границы этикетки на фото) */
+    .fbottle{position:absolute;left:calc(50% - 58px);top:-243px;width:118px;height:457px;filter:drop-shadow(0 6px 10px rgba(27,26,24,.3));pointer-events:none}
+    .fbottle img{display:block;width:100%;height:100%;clip-path:inset(56.4% 14.5% 17.3% 13.2% round 3px);transform:rotate(-4deg);transform-origin:50% 69.5%;transition:clip-path .55s cubic-bezier(.2,.7,.2,1),transform .4s cubic-bezier(.34,1.56,.64,1)}
+    .fcard:hover .fbottle img{clip-path:inset(0 0 0 0 round 3px);transform:translateY(-72px) rotate(0deg)}
     .fan[data-state="wait"] .fpop{transform:scale(0)}
     .fan[data-state="in"] .fpop{animation:fan-pop 1.1s both;animation-delay:calc(var(--i) * 80ms + 150ms)}
     @keyframes fan-pop{0%{transform:scale(0)}40%{transform:scale(1.12)}58%{transform:scale(.94)}74%{transform:scale(1.03)}88%{transform:scale(.99)}100%{transform:scale(1)}}
     @media (min-width:900px){
-      .fan{display:flex;justify-content:center;align-items:center;position:relative;height:460px}
-      .fcard{position:absolute;width:230px;z-index:var(--i);transform:translate(calc(var(--x) + var(--push,0px)),var(--y)) rotate(var(--r))}
-      .fcard:hover{z-index:20;transform:translate(var(--x),-18px) rotate(0deg) scale(1.04)}
-      .fcard:hover ~ .fcard{--push:70px}
-      .fcard:has(~ .fcard:hover){--push:-70px}
+      .fan{display:flex;justify-content:center;align-items:center;position:relative;height:460px;padding-top:90px;--step:min(120px,(100vw - 420px) / 8)}
+      .fcard{position:absolute;width:230px;z-index:var(--i);transform:translate(calc(var(--x) * var(--step) + var(--push,0px)),var(--y)) rotate(var(--r))}
+      .fcard:hover{z-index:20;transform:translate(calc(var(--x) * var(--step)),-18px) rotate(0deg) scale(1.04)}
+      .fcard:hover ~ .fcard{--push:60px}
+      .fcard:has(~ .fcard:hover){--push:-60px}
     }
   </style>
 </helmet>
@@ -99,17 +103,24 @@
       <div style="display:flex;flex-direction:column;gap:6px">
         <h2 style="margin:0;font-size:clamp(56px,7vw,88px);line-height:.9;font-weight:700">Вкусы лимонадов</h2>
         <svg viewBox="0 0 420 20" style="width:min(420px,80%);height:18px;filter:url(#rough)"><path d="M4 12 C80 4 160 18 240 9 S380 6 416 12" stroke="#3f8f3a" stroke-width="4" fill="none" stroke-linecap="round"></path></svg>
-        <p style="margin:8px 0 0;font-size:28px;color:var(--ink-2)">Каждый — один фрукт и одна трава. Семь пар, выбирайте свою.</p>
+        <p style="margin:8px 0 0;font-size:28px;color:var(--ink-2)">Фрукты, травы и немного смелости. Выбирайте свой.</p>
       </div>
       <div id="flavour-fan" class="fan">
-        <sc-for list="{{ flavours }}" as="f" hint-placeholder-count="7">
+        <sc-for list="{{ flavours }}" as="f" hint-placeholder-count="8">
           <div class="fcard" style="--i:{{ f.i }};--x:{{ f.x }};--y:{{ f.y }};--r:{{ f.r }};--tilt:{{ f.tilt }}deg">
           <div class="fpop" style="position:relative;background:var(--paper-white);padding:28px 24px 26px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-paper)">
+            <sc-if value="{{ f.hasBottle }}" hint-placeholder-val="{{ false }}">
+              <div style="position:relative;height:150px">
+                <div class="fbottle"><img src="{{ f.bottle }}" alt="ARAX {{ f.en }}"></div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ f.noBottle }}" hint-placeholder-val="{{ true }}">
             <div style="position:relative;height:150px;display:flex;align-items:center;justify-content:center">
               <div style="position:absolute;width:140px;height:130px;border-radius:52% 48% 55% 45%/48% 55% 45% 52%;background:{{ f.color }};filter:url(#crayon);opacity:.9"></div>
               <div style="position:absolute;width:140px;height:130px;border-radius:52% 48% 55% 45%/48% 55% 45% 52%;background:repeating-linear-gradient(-40deg,{{ f.color }} 0 3px,transparent 3px 7px);transform:translate(10px,8px) rotate(8deg);filter:url(#rough)"></div>
               <div style="position:relative;font-size:56px;font-weight:700;color:var(--ink);transform:rotate(-6deg)">{{ f.num }}</div>
             </div>
+            </sc-if>
             <div style="font-size:36px;line-height:1;font-weight:700">{{ f.ru }}</div>
             <div style="font-size:20px;letter-spacing:.08em;color:var(--crayon-leaf);font-weight:700">{{ f.en }}</div>
             <div style="position:absolute;inset:0;border:2.5px solid var(--ink);border-radius:14px 4px 18px 6px/6px 18px 4px 14px;filter:url(#rough);pointer-events:none"></div>
@@ -272,10 +283,11 @@ class Component extends DCLogic {
         { num: '05', ru: 'Лаванда · толокнянка', en: 'LAVENDER · BEARBERRY', color: 'var(--crayon-plum)', tilt: -1.2 },
         { num: '06', ru: 'Эхинацея · чёрная смородина', en: 'ECHINACEA · BLACKCURRANT', color: 'var(--crayon-terracotta)', tilt: 0.8 },
         { num: '07', ru: 'Сосна · лимон', en: 'PINE · LEMON', color: 'var(--crayon-leaf)', tilt: -1.8 },
-      ].map((f, i) => {
+        { num: '08', ru: 'Слива · кола', en: 'PLUM · COLA', color: 'var(--crayon-plum)', tilt: 1.2, bottle: 'assets/bottles/plum-cola-bottle.png' },
+      ].map((f, i, all) => {
         // веер: карточки расходятся от центра дугой, как карты в руке
-        const d = i - 3;
-        return { ...f, i, x: d * 135 + 'px', y: d * d * 7 + 'px', r: d * 5 + 'deg' };
+        const d = i - (all.length - 1) / 2;
+        return { ...f, i, x: d, y: d * d * 6 + 'px', r: d * 4.5 + 'deg', hasBottle: !!f.bottle, noBottle: !f.bottle };
       }),
       venues,
       collabs: [
